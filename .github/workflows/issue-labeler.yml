@@ -5,17 +5,13 @@ on:
 
 permissions:
   issues: write
+  pull-requests: write
   contents: read
 
 jobs:
   triage:
     runs-on: ubuntu-latest
     steps:
-      - name: Diagnose direct API call
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh api -X POST repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels -f 'labels[]=allowlist'
       - uses: github/issue-labeler@ccca1e16fcb66762200e616fc29b57b940c1cb67 # v3.5
         with:
           configuration-path: .github/issue-labeler.yml
